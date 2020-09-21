@@ -9,6 +9,8 @@ echo "### Starting MMTests..."
 time echo yes | numactl -C 0-3 mmtests_CI/run-mmtests.sh --config mmtests_CI/configs/config-workload-wp-tlbflush C_TLBFLUSH_1
 echo "### MMTests DONE!"
 
+sleep 5
+
 kill $(cat PID) ; rm PID
 #cat MEMORY.log
 echo "* * * * * MEMORY.log  * * * *"
