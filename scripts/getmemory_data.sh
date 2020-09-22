@@ -5,7 +5,7 @@ PATTERN="run-mmtests"
 
 TIME=0.1
 
-echo 0 > ~/START
+echo 0 > $WORKSPACE/START
 
 while true ; do
   STR=$(ps -eaf | grep "${PATTERN}" | grep -v "grep ${PATTERN}")
@@ -16,7 +16,7 @@ while true ; do
     GID=$(ps -o sid= -p ${PID})
     if [ $? -eq 0 ] ; then
       MEM=$(pmap $(ps --forest -o pid -g ${GID} | sed '1,2d') | grep total | grep -v grep | sed 's/.*[^0-9]\([0-9].*\)[^0-9].*/\1/g' | paste -s -d '+' | bc)
-      if [ $(cat ~/START) -eq 1 ] ; then
+      if [ $(cat $WORKSPACE/START) -eq 1 ] ; then
         echo "+++ ${MEM}"
       else
         echo "=== ${MEM}"
