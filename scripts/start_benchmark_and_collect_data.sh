@@ -13,7 +13,7 @@ sleep 5
 
 kill $(cat PID) ; rm PID
 #cat MEMORY.log
-echo "* * * * * MEMORY.log  * * * *"
+echo "* * * * * MEMORY.log(KB)  * * * *"
 echo "### ONLY ACTUAL RUN"
 cat MEMORY.log | grep '+++' | cut -d ' ' -f2- | jq -s 'min,max'
 echo "### ONLY OUTSIDE ACTUAL RUN"
@@ -22,7 +22,7 @@ echo "### THROUGHOUT RUN"
 cat MEMORY.log | grep -e '+++' -e '===' | cut -d ' ' -f2- | jq -s 'min,max'
 
 #cat FREE.log
-echo "* * * * * FREE.log  * * * *"
+echo "* * * * * FREE.log(MB)  * * * *"
 echo "### USED: ONLY ACTUAL RUN"
 cat FREE.log | grep '+++' | cut -d ' ' -f2- | grep 'Mem:'| tr -s ' ' | cut -d ' ' -f3 | jq -s 'min,max'
 echo "### USED: ONLY OUTSIDE ACTUAL RUN"
