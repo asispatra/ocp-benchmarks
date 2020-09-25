@@ -11,8 +11,7 @@ echo "### MMTests DONE!"
 
 sleep 5
 
-kill $(cat PID) > /dev/null 2>&1 
-rm PID > /dev/null 2>&1
+kill $(cat PID) ; rm PID 
 
 #cat MEMORY.log
 echo "* * * * * MEMORY.log(KB)  * * * *"
