@@ -7,7 +7,7 @@ TIME=0.1
 
 echo 0 > $WORKSPACE/START
 
-OD_CGROUP_DIR=$(cat /proc/self/cgroup| grep ":memory:" | cut -d ':' -f 3)
+POD_CGROUP_DIR=$(cat /proc/self/cgroup| grep ":memory:" | cut -d ':' -f 3)
 POD_CGROUP_DIR="/sys/fs/cgroup/memory${POD_CGROUP_DIR}"
 
 #cat $POD_CGROUP_DIR/memory.kmem.usage_in_bytes
