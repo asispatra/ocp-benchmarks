@@ -4,6 +4,8 @@ bash getmemory_data.sh > MEMORY.log 2>&1 &
 echo $! > PID
 bash getfree_data.sh > FREE.log 2>&1 &
 echo $! >> PID
+bash getkmem_data.sh > KMEM.log 2>&1 &
+echo $! >> PID
 
 echo "### Starting MMTests..."
 time echo yes | numactl -C 0-3 mmtests_CI/run-mmtests.sh --config mmtests_CI/configs/config-workload-wp-tlbflush C_TLBFLUSH_1
@@ -37,3 +39,12 @@ echo "### CACHED: ONLY OUTSIDE ACTUAL RUN"
 cat FREE.log | grep '===' | cut -d ' ' -f2- | grep 'Mem:'| tr -s ' ' | cut -d ' ' -f7 | jq -s 'min,max'
 echo "### CACHED: THROUGHOUT RUN"
 cat FREE.log | grep -e '+++' -e '===' | cut -d ' ' -f2- | grep 'Mem:'| tr -s ' ' | cut -d ' ' -f7 | jq -s 'min,max'
+
+#cat KMEM.log
+echo "* * * * * KMEM.log(Bytes)  * * * *"
+echo "### KMEM: ONLY ACTUAL RUN"
+cat KMEM.log | grep '+++' | cut -d ' ' -f2- | jq -s 'min,max'
+echo "### KMEM: ONLY OUTSIDE ACTUAL RUN"
+cat KMEM.log | grep '===' | cut -d ' ' -f2- | jq -s 'min,max'
+echo "### KMEM: THROUGHOUT RUN"
+cat KMEM.log | grep -e '+++' -e '===' | cut -d ' ' -f2- | jq -s 'min,max'
