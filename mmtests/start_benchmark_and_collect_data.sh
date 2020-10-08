@@ -11,6 +11,7 @@ bash getkmem_data.sh > KMEM.log 2>&1 &
 echo $! >> PID
 
 echo "### Starting MMTests..."
+echo "$@"
 eval "$@"
 echo "### MMTests DONE!"
 
