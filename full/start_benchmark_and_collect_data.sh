@@ -45,6 +45,7 @@ cat FREE.log | grep -e '+++' -e '===' | cut -d ' ' -f2- | grep 'Mem:'| tr -s ' '
 
 #cat KMEM.log
 echo "* * * * * KMEM.log(Bytes)  * * * *"
+cat KMEM.log | grep "POD_CGROUP_DIR"
 echo "### KMEM: ONLY ACTUAL RUN"
 cat KMEM.log | grep '+++' | cut -d ' ' -f2- | jq -s 'first,min,max'
 echo "### KMEM: ONLY OUTSIDE ACTUAL RUN"
