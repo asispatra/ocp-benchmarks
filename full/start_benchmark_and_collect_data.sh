@@ -2,6 +2,7 @@
 
 #sed -i 's/PROCESSES=4/PROCESSES=$NUMCPUS/g' mmtests_CI/configs/config-workload-wp-tlbflush 
 #sed -i 's/PROCESSES=4/PROCESSES=8/g' mmtests_CI/configs/config-workload-wp-tlbflush 
+sed -i 's/5000$/50000/' mmtests_CI/shellpack_src/src/wptlbflush/wptlbflush-install
 
 #bash getmemory_data.sh > MEMORY.log 2>&1 &
 #echo $! > PID
