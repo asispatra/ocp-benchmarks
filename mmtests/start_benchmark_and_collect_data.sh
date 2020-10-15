@@ -7,6 +7,8 @@ if echo "$@" | grep workload-wp-tlbflush > /dev/null; then
   sed -i 's/5000$/50000/' mmtests_CI/shellpack_src/src/wptlbflush/wptlbflush-install
 elif echo "$@" | grep db-sqlite-insert > /dev/null; then 
   sed -i 's/SQLITE_SIZE=.*$/SQLITE_SIZE=50000/' mmtests_CI/configs/config-db-sqlite-insert-small
+elif echo "$@" | grep io-pgioperf > /dev/null; then
+  sed -i 's/PGIOPERF_SAMPLES=.*$/PGIOPERF_SAMPLES=30000/' mmtests_CI/configs/config-io-pgioperf
 fi
 
 #bash getmemory_data.sh > MEMORY.log 2>&1 &
@@ -67,4 +69,6 @@ if echo "$@" | grep workload-wp-tlbflush > /dev/null; then
   cat  mmtests_CI/work/log/C_TLBFLUSH_1/iter-0/wptlbflush/logs/wp-tlbflush-*.log | jq -s 'min,max,add/length'
 elif echo "$@" | grep db-sqlite-insert > /dev/null; then 
   cat mmtests_CI/work/log/C_SQLITE_1/iter-0/sqlite/logs/sqlite*.time
+elif echo "$@" | grep io-pgioperf > /dev/null; then
+  mmtests_CI/bin/compare-mmtests.pl --directory mmtests_CI/work/log --benchmark pgioperfbench --names C_PGIOPERF_1
 fi
