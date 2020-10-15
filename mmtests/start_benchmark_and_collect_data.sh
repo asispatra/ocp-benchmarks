@@ -9,6 +9,8 @@ elif echo "$@" | grep db-sqlite-insert > /dev/null; then
   sed -i 's/SQLITE_SIZE=.*$/SQLITE_SIZE=50000/' mmtests_CI/configs/config-db-sqlite-insert-small
 elif echo "$@" | grep io-pgioperf > /dev/null; then
   sed -i 's/PGIOPERF_SAMPLES=.*$/PGIOPERF_SAMPLES=30000/' mmtests_CI/configs/config-io-pgioperf
+elif echo "$@" | grep workload-thpscale > /dev/null; then
+  sed -i 's/THPSCALE_MAPSIZE=.*$/THPSCALE_MAPSIZE=20971520/' mmtests_CI/configs/config-workload-thpscale
 fi
 
 #bash getmemory_data.sh > MEMORY.log 2>&1 &
@@ -66,9 +68,12 @@ cat KMEM.log | grep -e '+++' -e '===' | cut -d ' ' -f2- | jq -s 'first,min,max'
 # Performance Data
 echo "### PERFORMANCE"
 if echo "$@" | grep workload-wp-tlbflush > /dev/null; then 
-  cat  mmtests_CI/work/log/C_TLBFLUSH_1/iter-0/wptlbflush/logs/wp-tlbflush-*.log | jq -s 'min,max,add/length'
+  #cat  mmtests_CI/work/log/C_TLBFLUSH_1/iter-0/wptlbflush/logs/wp-tlbflush-*.log | jq -s 'min,max,add/length'
+  mmtests_CI/bin/compare-mmtests.pl --directory mmtests_CI/work/log --benchmark wptlbflush --names C_TLBFLUSH_1
 elif echo "$@" | grep db-sqlite-insert > /dev/null; then 
   cat mmtests_CI/work/log/C_SQLITE_1/iter-0/sqlite/logs/sqlite*.time
 elif echo "$@" | grep io-pgioperf > /dev/null; then
   mmtests_CI/bin/compare-mmtests.pl --directory mmtests_CI/work/log --benchmark pgioperfbench --names C_PGIOPERF_1
+elif echo "$@" | grep workload-thpscale > /dev/null; then
+  mmtests_CI/bin/compare-mmtests.pl --directory mmtests_CI/work/log --benchmark thpscale --names C_THPSCALE_1
 fi
