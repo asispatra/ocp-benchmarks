@@ -59,3 +59,12 @@ echo "### KMEM: ONLY OUTSIDE ACTUAL RUN"
 cat KMEM.log | grep '===' | cut -d ' ' -f2- | jq -s 'first,min,max'
 echo "### KMEM: THROUGHOUT RUN"
 cat KMEM.log | grep -e '+++' -e '===' | cut -d ' ' -f2- | jq -s 'first,min,max'
+
+
+# Performance Data
+echo "### PERFORMANCE"
+if echo "$@" | grep workload-wp-tlbflush > /dev/null; then 
+  cat  mmtests_CI/work/log/C_TLBFLUSH_1/iter-0/wptlbflush/logs/wp-tlbflush-*.log | jq -s 'min,max,add/length'
+elif echo "$@" | grep db-sqlite-insert > /dev/null; then 
+  cat /opt/app-root/src/mmtests_CI/work/log/C_SQLITE_1/iter-0/sqlite/logs/sqlite*.time
+fi
