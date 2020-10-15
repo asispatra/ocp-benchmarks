@@ -10,7 +10,7 @@ elif echo "$@" | grep db-sqlite-insert > /dev/null; then
 elif echo "$@" | grep io-pgioperf > /dev/null; then
   sed -i 's/PGIOPERF_SAMPLES=.*$/PGIOPERF_SAMPLES=30000/' mmtests_CI/configs/config-io-pgioperf
 elif echo "$@" | grep workload-thpscale > /dev/null; then
-  sed -i 's/THPSCALE_MAPSIZE=.*$/THPSCALE_MAPSIZE=20971520/' mmtests_CI/configs/config-workload-thpscale
+  sed -i 's/THPSCALE_MAPSIZE=.*$/THPSCALE_MAPSIZE=21474836480/' mmtests_CI/configs/config-workload-thpscale
 fi
 
 #bash getmemory_data.sh > MEMORY.log 2>&1 &
