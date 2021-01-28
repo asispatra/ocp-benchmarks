@@ -3,7 +3,7 @@
 PATTERN="run-mmtests"
 #PATTERN="worker"
 
-TIME=0.5
+TIME=0.1
 
 echo 0 > $WORKSPACE/START
 
