@@ -5,7 +5,7 @@
 
 if echo "$@" | grep workload-wp-tlbflush > /dev/null; then 
   sed -i 's/5000$/50000/' mmtests_CI/shellpack_src/src/wptlbflush/wptlbflush-install
-  sed -i 's/PROCESSES=4/PROCESSES=1/g' mmtests_CI/configs/config-workload-wp-tlbflush 
+  #sed -i 's/PROCESSES=4/PROCESSES=8/g' mmtests_CI/configs/config-workload-wp-tlbflush 
 elif echo "$@" | grep db-sqlite-insert > /dev/null; then 
   sed -i 's/SQLITE_SIZE=.*$/SQLITE_SIZE=50000/' mmtests_CI/configs/config-db-sqlite-insert-small
 elif echo "$@" | grep io-pgioperf > /dev/null; then
